@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createInstruction } from '../../store/actions/instructionActions'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 
 class CreateInstruction extends Component {
     state = {
@@ -57,8 +57,12 @@ class CreateInstruction extends Component {
                         </div>
                     </div>
 
-                    <div className="input-field">
-                        <button className="btn pink lighten-1 z-depth-0">Create</button>
+                    <div className="flex-row">
+                        <Link to='/' className="btn teal lighten-1 z-depth-0">Back</Link>
+
+                        <div className="input-field ">
+                            <button className="btn teal lighten-1 z-depth-0">Create</button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -66,9 +70,9 @@ class CreateInstruction extends Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
     return {
-        auth: state.firebase.auth
+        auth: state.firebase.auth,
     }
 }
 

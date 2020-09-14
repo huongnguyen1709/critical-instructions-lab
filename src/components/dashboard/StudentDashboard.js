@@ -5,11 +5,7 @@ class StudentDashboard extends Component {
     render() {
         return (
             <div className="container">
-                <div class="row">
-                    <div class="col s8 offset-s2">
 
-                    </div>
-                </div>
             </div>
         );
     }
