@@ -9,6 +9,7 @@ class TeacherDashboard extends Component {
     state = {}
     render() {
         const { instructions, auth } = this.props
+        console.log(instructions)
         return (
             <div className="container">
                 <div className="row">

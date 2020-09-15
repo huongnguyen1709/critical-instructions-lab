@@ -8,7 +8,7 @@ import { deleteInstruction } from '../../store/actions/instructionActions'
 
 const InstructionDetail = (props) => {
     const { instruction, auth, instructionId } = props
-    // if (!auth.uid) return <Redirect to='/signin' />
+    if (!auth.uid) return <Redirect to='/' />
 
     const onDelete = (instructionId, instruction) => {
         if (auth.uid === instruction.authorId) {
@@ -24,6 +24,7 @@ const InstructionDetail = (props) => {
             return (
                 <div>
                     <Link to={'/instruction/' + instructionId + '/edit'} className="btn teal lighten-1 z-depth-0 mr-30" >Edit</Link>
+                    <Link to={'/instruction/' + instructionId + '/addQuestions'} className="btn teal lighten-1 z-depth-0 mr-30" >Add Question</Link>
                     <button className="btn teal lighten-1 z-depth-0" onClick={() => onDelete(instructionId, instruction)}>Delete</button>
                 </div>
             )
@@ -56,8 +57,8 @@ const InstructionDetail = (props) => {
                 <div className="card z-depth-0">
                     <div className="card-content flex-column">
                         <span className="card-title teal-text center heading">{instruction.title}</span>
-                        <img src={instruction.image} alt="There is no chosen image" />
                         <p className="mt-30">{instruction.content}</p>
+                        <img src={instruction.image} alt="There is no chosen image" />
                     </div>
                     <div className="card-action grey lighten-4 grey-text flex-row">
                         <Link to='/' className="btn teal lighten-1 z-depth-0">Back</Link>

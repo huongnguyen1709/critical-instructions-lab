@@ -5,18 +5,16 @@ import SignIn from './components/auth/SignIn'
 import SignUp from './components/auth/SignUp'
 import InstructionDetail from './components/instructions/InstructionDetail'
 import CreateInstruction from './components/instructions/CreateInstruction'
-import HomePage from './components/dashboard/HomePage'
 import EditInstruction from './components/instructions/EditInstruction'
-import TeacherDashboard from './components/dashboard/TeacherDashboard'
+import Dashboard from './components/dashboard/Dashboard'
 
-function App(props) {
-    const { auth } = props
+function App() {
     return (
         <BrowserRouter>
             <div className="App">
                 <NavBar />
                 <Switch>
-                    <Route exact path='/' component={TeacherDashboard} />
+                    <Route exact path='/' component={Dashboard} />
                     <Route path='/signin' component={SignIn} />
                     <Route path='/signup' component={SignUp} />
                     <Route exact path='/instruction/:id' component={InstructionDetail} />
