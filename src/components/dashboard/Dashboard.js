@@ -3,29 +3,102 @@ import InstructionList from '../instructions/InstructionList'
 import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
-import StudentInstructions from '../instructions/StudentInstructions'
+import StudentInstruc from '../student/StudentInstruc'
+import InstrucDetail from '../student/InstrucDetail'
+import QuestionDetail from '../student/QuestionDetail'
 
 class TeacherDashboard extends Component {
-    state = {}
+    constructor(props) {
+        super(props);
+        this.state = {
+            showDetail: false,
+            instruction: {},
+            showQuestion: false,
+            answer: true,
+        };
+    }
+
+    onShowDetail = () => {
+        const { showDetail } = this.state
+        this.setState({
+            showDetail: !showDetail
+        })
+    }
+
+    onReceiveDetail = (instruction) => {
+        this.setState({
+            instruction: instruction
+        })
+    }
+
+    onShowQuestion = () => {
+        const { showQuestion } = this.state
+        this.setState({
+            showQuestion: !showQuestion
+        })
+    }
+
+    onResetAnswer = () => {
+        this.setState({ answer: false })
+    }
+
+    onAnswer = (answers) => {
+        console.log(answers)
+        answers.map(answer => {
+            if (answer === true) {
+                this.setState({ answer: true })
+                return true
+            }
+            else {
+                this.setState({ answer: false })
+                console.log('answer is false')
+                return false
+            }
+        })
+    }
+
     render() {
         const { instructions, auth } = this.props
-        console.log(instructions)
+        const { showDetail, instruction, showQuestion, answer } = this.state
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col s12 m6 offset-m2">
-                        {
-                            auth.uid ? <InstructionList instructions={instructions} /> : <StudentInstructions instructions={instructions} />
-                        }
+            <div className={showDetail ? 'container relative' : 'container'}>
+                <div className={showDetail || showQuestion ? 'row invisible' : 'row'}>
+                    {
+                        auth.uid ?
+                            <InstructionList instructions={instructions} authUid={auth.uid} /> :
+                            <StudentInstruc
+                                instructions={instructions}
+                                onShowDetail={this.onShowDetail}
+                                onReceiveDetail={this.onReceiveDetail}
+                                onShowQuestion={this.onShowQuestion}
+                                onInstructionId={this.onInstructionId}
+                                answer={answer}
+                                onResetAnswer={this.onResetAnswer}
+                                onAnswerCheck={this.onAnswerCheck}
+                            />
+                    }
+                </div>
 
-                    </div>
+                <div className={showDetail ? 'popup' : null}>
+                    {showDetail ? <InstrucDetail instruction={instruction} onShowDetail={this.onShowDetail} /> : null}
+                </div>
+
+                <div className={showQuestion ? 'popup' : null}>
+                    {
+                        showQuestion ?
+                            <QuestionDetail
+                                instruction={instruction}
+                                onShowQuestion={this.onShowQuestion}
+                                onAnswer={this.onAnswer}
+                            /> : null
+                    }
                 </div>
             </div>
         );
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
     return {
         instructions: state.firestore.ordered.instructions,
         auth: state.firebase.auth
@@ -35,6 +108,8 @@ const mapStateToProps = state => {
 export default compose(
     connect(mapStateToProps),
     firestoreConnect([
-        { collection: 'instructions' }
+        {
+            collection: 'instructions'
+        }
     ])
 )(TeacherDashboard);

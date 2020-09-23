@@ -50,8 +50,8 @@ export const createInstruction = instruction => {
                 createdAt: new Date()
             }).then(() => {
                 dispatch({ type: 'CREATE_INSTRUCTION', instruction })
-            }).catch((error) => {
-                dispatch({ type: 'CREATE_INSTRUCTION_ERROR', error })
+            }).catch(err => {
+                dispatch({ type: 'CREATE_INSTRUCTION_ERROR', err })
             })
         }
 

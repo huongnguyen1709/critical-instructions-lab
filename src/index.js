@@ -10,6 +10,8 @@ import thunk from 'redux-thunk'
 import { reduxFirestore, getFirestore } from 'redux-firestore'
 import { reactReduxFirebase, getFirebase } from 'react-redux-firebase'
 import fbConfig from './config/fbConfig'
+import { transitions, positions, Provider as AlertProvider } from 'react-alert'
+import AlertTemplate from 'react-alert-template-basic'
 
 const store = createStore(rootReducer,
   compose(
@@ -19,11 +21,23 @@ const store = createStore(rootReducer,
   )
 )
 
+// optional configuration
+const options = {
+  // you can also just use 'bottom center'
+  position: positions.TOP_CENTER,
+  timeout: 5000,
+  offset: '30px',
+  // you can also just use 'scale'
+  transition: transitions.SCALE
+}
+
 store.firebaseAuthIsReady.then(() => {
   ReactDOM.render(
     <React.Fragment>
       <Provider store={store}>
-        <App />
+        <AlertProvider template={AlertTemplate} {...options}>
+          <App />
+        </AlertProvider>
       </Provider>
     </React.Fragment>,
     document.getElementById('root')

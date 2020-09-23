@@ -43,7 +43,7 @@ class CreateInstruction extends Component {
                     </div>
 
                     <div className="input-field">
-                        <label htmlFor="password">Instruction Content</label>
+                        <label htmlFor="content">Instruction Content</label>
                         <textarea id="content" className="materialize-textarea" onChange={this.handleChange}></textarea>
                     </div>
 
@@ -59,10 +59,7 @@ class CreateInstruction extends Component {
 
                     <div className="flex-row">
                         <Link to='/' className="btn teal lighten-1 z-depth-0">Back</Link>
-
-                        <div className="input-field ">
-                            <button className="btn teal lighten-1 z-depth-0">Create</button>
-                        </div>
+                        <button className="btn teal lighten-1 z-depth-0">Create</button>
                     </div>
                 </form>
             </div>

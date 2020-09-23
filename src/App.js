@@ -7,6 +7,9 @@ import InstructionDetail from './components/instructions/InstructionDetail'
 import CreateInstruction from './components/instructions/CreateInstruction'
 import EditInstruction from './components/instructions/EditInstruction'
 import Dashboard from './components/dashboard/Dashboard'
+import AddQuestion from './components/questions/AddQuestion'
+import QuestionSummary from './components/instructions/QuestionSummary'
+import EditQuestion from './components/questions/EditQuestion'
 
 function App() {
     return (
@@ -20,6 +23,9 @@ function App() {
                     <Route exact path='/instruction/:id' component={InstructionDetail} />
                     <Route path='/create' component={CreateInstruction} />
                     <Route path='/instruction/:id/edit' component={EditInstruction} />
+                    <Route path='/instruction/:id/newQuestion' component={AddQuestion} />
+                    <Route path='/instruction/:id/:title/question' component={QuestionSummary} />
+                    <Route path='/question/:id/edit' component={EditQuestion} />
                 </Switch>
             </div>
         </BrowserRouter>
