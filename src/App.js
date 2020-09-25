@@ -24,8 +24,8 @@ function App() {
                     <Route path='/create' component={CreateInstruction} />
                     <Route path='/instruction/:id/edit' component={EditInstruction} />
                     <Route path='/instruction/:id/newQuestion' component={AddQuestion} />
-                    <Route path='/instruction/:id/:title/question' component={QuestionSummary} />
-                    <Route path='/question/:id/edit' component={EditQuestion} />
+                    <Route exact path='/instruction/:id/:title/question' component={QuestionSummary} />
+                    <Route path='/instruction/:instrucId/:title/question/:quesId/edit' component={EditQuestion} />
                 </Switch>
             </div>
         </BrowserRouter>

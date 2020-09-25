@@ -77,7 +77,7 @@ export const editInstruction = (instruction) => {
             }).catch(err => {
                 dispatch({ type: 'EDIT_INSTRUCTION_ERROR', err })
             })
-        } else if (newImageFile && newImageFile.name !== imageFileName) { // delete ko duoc
+        } else if (newImageFile && newImageFile.name !== imageFileName) {
             console.log('case 2')
             const imageRef = firebase.storage().ref(`images/${imageFileName}`)
             imageRef.getDownloadURL().then(url => {
