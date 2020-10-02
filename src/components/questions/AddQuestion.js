@@ -21,15 +21,15 @@ class AddQuestion extends Component {
 
     handleSubmit = e => {
         e.preventDefault()
-        const { instructionId } = this.props
-        this.props.addQuestion(this.state, instructionId)
+        const { instructionId, authorId } = this.props
+        this.props.addQuestion(this.state, instructionId, authorId)
         this.props.history.push('/')
     }
 
     render() {
-        const { auth } = this.props
-        console.log(this.state)
-        if (!auth.uid) return <Redirect to='/' />
+        const { auth, authorId } = this.props
+        if (!auth.uid) return <Redirect to='/signin' />
+        if (auth.uid !== authorId) return <Redirect to='/' />
         return (
             <div className="container">
                 <form onSubmit={this.handleSubmit} className="white">
@@ -72,15 +72,17 @@ class AddQuestion extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     const instructionId = ownProps.match.params.id
+    const authorId = ownProps.match.params.authorId
     return {
         auth: state.firebase.auth,
-        instructionId: instructionId
+        instructionId: instructionId,
+        authorId: authorId
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        addQuestion: (question, instructionId) => dispatch(addQuestion(question, instructionId))
+        addQuestion: (question, instructionId, authorId) => dispatch(addQuestion(question, instructionId, authorId))
     }
 }
 

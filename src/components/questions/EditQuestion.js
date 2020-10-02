@@ -15,7 +15,7 @@ class EditQuestion extends Component {
         answer4: ''
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         const { question } = this.props
         if (question) {
             this.setState({
@@ -55,16 +55,12 @@ class EditQuestion extends Component {
     }
 
     onDelete = () => {
-        const { questionId, question } = this.props
-        // if (auth.uid === instruction.authorId) {
-        //     if (window.confirm('Are you sure you want to delete ?')) {
-        //         props.deleteInstruction(instructionId, instruction)
-        //         props.history.push('/')
-        //     }
-        // }
-
-        if (window.confirm('Are you sure you want to delete ?')) {
-            this.props.deleteQuestion(question, questionId)
+        const { questionId, question, auth } = this.props
+        if (auth.uid === question.authorId) {
+            if (window.confirm('Are you sure you want to delete ?')) {
+                this.props.deleteQuestion(question, questionId)
+                this.props.history.push('/')
+            }
         }
     }
 

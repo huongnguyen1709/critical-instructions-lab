@@ -15,7 +15,7 @@ class EditInstruction extends Component {
         imageFileName: '',
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         const { instructionId, instruction } = this.props
         if (instructionId && instruction) {
             this.setState({
@@ -74,7 +74,7 @@ class EditInstruction extends Component {
     }
 
     render() {
-        var { title, content, imageOnChange } = this.state
+        var { title, content, imageOnChange, imageFileName } = this.state
         const { auth } = this.props
         if (!auth.uid) return <Redirect to='/signin' />
         console.log(this.state.newImage)
@@ -101,7 +101,7 @@ class EditInstruction extends Component {
                         ></textarea>
                     </div>
                     <div className="input-field flex-row mt-30">
-                        <img src={imageOnChange} alt="There is no image" className="center" />
+                        {imageOnChange ? <img src={imageOnChange} alt={imageFileName} className="center" /> : null}
                     </div>
 
                     <div className="file-field input-field mt-60">

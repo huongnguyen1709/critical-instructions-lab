@@ -24,7 +24,7 @@ const InstructionDetail = (props) => {
             return (
                 <div>
                     <Link to={'/instruction/' + instructionId + '/edit'} className="btn teal lighten-1 z-depth-0 mr-30" >Edit</Link>
-                    <Link to={'/instruction/' + instructionId + '/newQuestion'} className="btn teal lighten-1 z-depth-0 mr-30" >Add Question</Link>
+                    <Link to={'/instruction/' + instructionId + '-' + instruction.authorId + '/newQuestion'} className="btn teal lighten-1 z-depth-0 mr-30" >Add Question</Link>
                     <Link to={'/instruction/' + instructionId + '/' + instruction.title + '/question'} className="btn teal lighten-1 z-depth-0 mr-30" >See Question</Link>
                     <button className="btn teal lighten-1 z-depth-0" onClick={() => onDelete(instructionId, instruction)}>Delete</button>
                 </div>
@@ -52,7 +52,6 @@ const InstructionDetail = (props) => {
     }
 
     if (instruction) {
-        console.log(instruction.image)
         return (
             <div className="container section">
                 <div className="card z-depth-0">

@@ -115,3 +115,7 @@ img {
 .bold {
   font-weight: bold;
 }
+
+.font-weight-350 {
+  font-weight: 350 !important;
+}

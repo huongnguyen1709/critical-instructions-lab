@@ -19,11 +19,11 @@ class QuestionDetail extends Component {
 
     handleOptionChange = e => {
         const selectedOption = e.target.value
-        const { questions, instruction } = this.props
+        const { question } = this.props
         this.setState({
             selectedOption: selectedOption,
-            answer: questions && questions.map(question => {
-                if (question.instructionId === instruction.id && selectedOption === question.rightAnswer) {
+            answer: question && question.map(ques => {
+                if (ques && selectedOption === ques.rightAnswer) {
                     return true
                 } else return false
             })
@@ -44,10 +44,11 @@ class QuestionDetail extends Component {
     }
 
     render() {
-        const { questions, instruction } = this.props
+        const { question, instruction } = this.props
         console.log(this.state.answer)
-        const showQuestionDetail = questions && questions.map(question => {
-            if (question.instructionId === instruction.id) {
+        const showQuestionDetail = question && question.map(ques => {
+            if (ques) {
+
                 return (
                     <div className="section" key={question.id}>
                         <div className="card z-depth-0">
@@ -58,26 +59,26 @@ class QuestionDetail extends Component {
                                     <h6>{question.question}</h6>
                                     <h6>
                                         <label>
-                                            <input className="with-gap" name="answer" type="radio" value={question.rightAnswer} onChange={this.handleOptionChange} />
-                                            <span>{question.rightAnswer}</span>
+                                            <input className="with-gap" name="answer" type="radio" value={ques.rightAnswer} onChange={this.handleOptionChange} />
+                                            <span>{ques.rightAnswer}</span>
                                         </label>
                                     </h6>
                                     <h6>
                                         <label>
-                                            <input className="with-gap" name="answer" type="radio" value={question.answer2} onChange={this.handleOptionChange} />
-                                            <span>{question.answer2}</span>
+                                            <input className="with-gap" name="answer" type="radio" value={ques.answer2} onChange={this.handleOptionChange} />
+                                            <span>{ques.answer2}</span>
                                         </label>
                                     </h6>
                                     <h6>
                                         <label>
-                                            <input className="with-gap" name="answer" type="radio" value={question.answer3} onChange={this.handleOptionChange} />
-                                            <span>{question.answer3}</span>
+                                            <input className="with-gap" name="answer" type="radio" value={ques.answer3} onChange={this.handleOptionChange} />
+                                            <span>{ques.answer3}</span>
                                         </label>
                                     </h6>
                                     <h6>
                                         <label>
-                                            <input className="with-gap" name="answer" type="radio" value={question.answer4} onChange={this.handleOptionChange} />
-                                            <span>{question.answer4}</span>
+                                            <input className="with-gap" name="answer" type="radio" value={ques.answer4} onChange={this.handleOptionChange} />
+                                            <span>{ques.answer4}</span>
                                         </label>
                                     </h6>
 
@@ -97,6 +98,7 @@ class QuestionDetail extends Component {
 
 
         })
+
         return (
             <div>
                 {showQuestionDetail}
@@ -107,8 +109,12 @@ class QuestionDetail extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     const questions = state.firestore.ordered.questions
+    const instructionId = ownProps.instruction.id
+    const question = questions.filter(question => {
+        return question.instructionId === instructionId
+    })
     return {
-        questions: questions,
+        question: question
     }
 }
 

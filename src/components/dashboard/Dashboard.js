@@ -57,6 +57,10 @@ class TeacherDashboard extends Component {
         })
     }
 
+    onHandleQuesAvai = () => {
+        this.setState({ answer: true })
+    }
+
     render() {
         const { instructions, auth } = this.props
         const { showDetail, instruction, showQuestion, answer } = this.state
@@ -75,6 +79,7 @@ class TeacherDashboard extends Component {
                                 answer={answer}
                                 onResetAnswer={this.onResetAnswer}
                                 onAnswerCheck={this.onAnswerCheck}
+                                onHandleQuesAvai={this.onHandleQuesAvai}
                             />
                     }
                 </div>

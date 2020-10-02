@@ -3,6 +3,7 @@ import InstructionSummary from './InstructionSummary';
 import { Link } from 'react-router-dom'
 
 const InstructionList = ({ instructions, authUid }) => {
+
     if (instructions && instructions.length > 0) {
         return (
             <div className="row">

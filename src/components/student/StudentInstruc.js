@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import InstructionSummary from '../instructions/InstructionSummary';
 import { withAlert } from 'react-alert'
+import { connect } from 'react-redux'
+import { firestoreConnect } from 'react-redux-firebase'
+import { compose } from 'redux'
 
 class StudentInstruc extends Component {
     constructor(props) {
@@ -8,36 +11,62 @@ class StudentInstruc extends Component {
         this.state = {
             index: 0,
             instructions: [],
-            instructionId: '',
             disabled: false,
+            quesDisabled: true
         };
     }
 
     onMoveToNextIns = () => {
-        const { instructions, answer } = this.props
+        const { instructions, answer, questions } = this.props
         const { index } = this.state
         const newInstruction = instructions[index]
-        if (answer === true) {
+        console.log(newInstruction)
+
+        if (answer === true && newInstruction) {
+            console.log('th1')
             this.setState({
                 instructions: [
                     ...this.state.instructions,
                     newInstruction
                 ],
                 index: index + 1,
-                instructionId: newInstruction.id
+                instructionId: newInstruction.id,
             })
+
             if (index === instructions.length - 1) {
                 this.setState({
                     index: 0,
                     disabled: true
                 })
             }
+
+            const question = questions.filter(question => {
+                return question.instructionId === newInstruction.id
+            })
+
+            if (question && question.length > 0) {
+                this.props.onResetAnswer()
+                this.setState({
+                    quesDisabled: false
+                })
+            } else {
+                this.props.onHandleQuesAvai()
+                this.setState({
+                    quesDisabled: true
+                })
+            }
             this.props.onReceiveDetail(newInstruction)
-            this.props.onResetAnswer()
+
+        } else if (!newInstruction) {
+            const alert = this.props.alert;
+            alert.show('There is no instruction !')
+
+
         } else {
             const alert = this.props.alert;
             console.log('you need to answer first')
             alert.show('you need to pass the question !')
+
         }
     }
 
@@ -51,8 +80,10 @@ class StudentInstruc extends Component {
     }
 
     render() {
-        const { instructions, disabled, instructionId } = this.state
-        console.log(instructionId)
+        const { answer } = this.props
+        console.log(answer)
+        const { instructions, disabled, quesDisabled } = this.state
+        console.log(quesDisabled)
         return (
             <div className="col s12 m6 offset-m2">
                 <div className="section">
@@ -72,7 +103,7 @@ class StudentInstruc extends Component {
                  <i className="material-icons ">arrow_downward</i>
                 </button>
 
-                <button className="btn waves-effect waves-light flex-row" onClick={this.onShowQuestion}>QuestionPopUp</button>
+                <button disabled={quesDisabled ? quesDisabled : null} className="btn waves-effect waves-light flex-row mt-30" onClick={this.onShowQuestion}>QuestionPopUp</button>
 
 
             </div>
@@ -81,5 +112,19 @@ class StudentInstruc extends Component {
     }
 }
 
+const mapStateToProps = (state, ownProps) => {
+    const questions = state.firestore.ordered.questions
+    return {
+        questions: questions
+    }
+}
 
-export default withAlert()(StudentInstruc);
+export default compose(
+    withAlert(),
+    connect(mapStateToProps),
+    firestoreConnect([
+        {
+            collection: 'questions'
+        }
+    ])
+)(StudentInstruc);

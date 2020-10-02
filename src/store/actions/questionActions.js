@@ -1,9 +1,10 @@
-export const addQuestion = (question, instructionId) => {
+export const addQuestion = (question, instructionId, authorId) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         const firestore = getFirestore()
         firestore.collection('questions').add({
             ...question,
-            instructionId: instructionId
+            instructionId: instructionId,
+            authorId: authorId
         }).then(() => {
             dispatch({ type: 'ADD_QUESTION', question })
         }).catch(err => {

@@ -8,7 +8,7 @@ import CreateInstruction from './components/instructions/CreateInstruction'
 import EditInstruction from './components/instructions/EditInstruction'
 import Dashboard from './components/dashboard/Dashboard'
 import AddQuestion from './components/questions/AddQuestion'
-import QuestionSummary from './components/instructions/QuestionSummary'
+import QuestionSummary from './components/questions/QuestionSummary'
 import EditQuestion from './components/questions/EditQuestion'
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
                     <Route exact path='/instruction/:id' component={InstructionDetail} />
                     <Route path='/create' component={CreateInstruction} />
                     <Route path='/instruction/:id/edit' component={EditInstruction} />
-                    <Route path='/instruction/:id/newQuestion' component={AddQuestion} />
+                    <Route path='/instruction/:id-:authorId/newQuestion' component={AddQuestion} />
                     <Route exact path='/instruction/:id/:title/question' component={QuestionSummary} />
                     <Route path='/instruction/:instrucId/:title/question/:quesId/edit' component={EditQuestion} />
                 </Switch>
