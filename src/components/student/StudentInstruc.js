@@ -80,10 +80,8 @@ class StudentInstruc extends Component {
     }
 
     render() {
-        const { answer } = this.props
-        console.log(answer)
         const { instructions, disabled, quesDisabled } = this.state
-        console.log(quesDisabled)
+
         return (
             <div className="col s12 m6 offset-m2">
                 <div className="section">
